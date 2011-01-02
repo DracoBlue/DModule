@@ -11,6 +11,16 @@ DModule is copyright (C) 2007-2011 by DracoBlue (<http://dracoblue.net>).
 - Official site: <http://dracoblue.net>
 - Documentation: <http://dev.dracoblue.net/index.php/DModule>
 
+# Development Version Notice
+
+If you see this message in your .zip/.tar.gz, you downloaded the development
+version. That's why you need to head to <http://sa-mp.com> download the
+windows binary package for the server and putt all *.exe files into the folder
+*core/samp/*. Otherwise nor compiling, nor executing projects will work!
+
+Of course there will be no real support if you are running on a development
+version of dmodule, since the api and stuff is usually subject to change.
+
 # Changelog
 
 - 0.15-dev
