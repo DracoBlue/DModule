@@ -1,0 +1,1 @@
+DialogResponse(playerid, dialogid, response, listitem, inputtext[])

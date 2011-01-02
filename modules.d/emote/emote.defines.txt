@@ -1,0 +1,2 @@
+EMOTE_me_color=0xFFBE0FFF
+EMOTE_action_color=0xFFD86FFF

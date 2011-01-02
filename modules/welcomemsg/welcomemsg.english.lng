@@ -1,0 +1,3 @@
+WELCOME_MESSAGE_ONE="Hello %s! Welcome to the GTAT Arcade Development Server."
+WELCOME_MESSAGE_TWO="--------------------------------------------------------------------------------"
+WELCOME_MESSAGE_THREE="Hint: This gamemode is still in alpha mode, please feel free to test and report problems!"

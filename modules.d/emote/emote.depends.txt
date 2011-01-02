@@ -1,0 +1,4 @@
+dcmd
+player
+dcache
+spawnsys
