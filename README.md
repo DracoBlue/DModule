@@ -20,9 +20,6 @@ DModule is copyright (C) 2007-2011 by DracoBlue (<http://dracoblue.net>).
   - added wine support for compiling
   - initial version in git repository
 
-     @version 0.14-svn
-     @author Jan Schütze (DracoBlue), JanS@DracoBlue.de
-
 # License
      
 DModule is licensed under the terms of MIT. See core/LICENSE for more information.
