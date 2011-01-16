@@ -7,7 +7,7 @@
 #pragma library vehicles
 
 #define INVALID_VEHICLE_ID						(0xFFFF)
-#define MAX_VEHICLES							(900)
+#define MAX_VEHICLES                            (2000)
 
 new Float:VEHICLE_SpawnPos[MAX_VEHICLES][3];
 
@@ -24,8 +24,8 @@ native SetVehicleToRespawn(vehicleid);
 native LinkVehicleToInterior(vehicleid, interiorid);
 native AddVehicleComponent(vehicleid, componentid);
 native RemoveVehicleComponent(vehicleid, componentid);
-native GetVehicleComponentType(componentid);
-native GetVehicleComponentInSlot(vehicleid,slot);
+native GetVehicleComponentType(component); // Find CARMODTYPE_* for component id
+native GetVehicleComponentInSlot(vehicleid, slot); // There is 1 slot for each CARMODTYPE_*
 native ChangeVehicleColor(vehicleid, color1, color2);
 native ChangeVehiclePaintjob(vehicleid, paintjobid);
 native SetVehicleHealth(vehicleid, Float:health);
@@ -49,26 +49,25 @@ native IsPlayerInVehicle(playerid, vehicleid);
 native IsPlayerInAnyVehicle(playerid);
 
 // Spectating
-native PlayerSpectateVehicle(playerid, targetvehicleid, mode = SPECTATE_MODE_NORMAL);
 
 forward OnVehicleSpawn(vehicleid);
 public OnVehicleSpawn(vehicleid) _VehicleSpawn(vehicleid);
 forward OnVehicleDeath(vehicleid, killerid);
 public OnVehicleDeath(vehicleid, killerid) _VehicleDeath(vehicleid, killerid);
-forward OnVehicleMod(vehicleid, componentid);
-public OnVehicleMod(vehicleid, componentid) _VehicleMod(vehicleid, componentid);
-forward OnVehiclePaintjob(vehicleid, paintjobid);
-public OnVehiclePaintjob(vehicleid, paintjobid) _VehiclePaintjob(vehicleid, paintjobid);
-forward OnVehicleRespray(vehicleid, color1, color2);
-public OnVehicleRespray(vehicleid, color1, color2) _VehicleRespray(vehicleid, color1, color2);
+forward OnVehicleMod(playerid, vehicleid, componentid);
+public OnVehicleMod(playerid, vehicleid, componentid) _VehicleMod(playerid, vehicleid, componentid);
+forward OnVehiclePaintjob(playerid, vehicleid, paintjobid);
+public OnVehiclePaintjob(playerid, vehicleid, paintjobid) _VehiclePaintjob(playerid, vehicleid, paintjobid);
+forward OnVehicleRespray(playerid, vehicleid, color1, color2);
+public OnVehicleRespray(playerid, vehicleid, color1, color2) _VehicleRespray(playerid, vehicleid, color1, color2);
 forward OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) _EnterVehicle(playerid, vehicleid, ispassenger);
 forward OnPlayerExitVehicle(playerid, vehicleid);
 public OnPlayerExitVehicle(playerid, vehicleid) _ExitVehicle(playerid, vehicleid);
-forward OnEnterExitModShop(playerid,enterexit,interiorid);
-public OnEnterExitModShop(playerid,enterexit,interiorid) _EnterExitModShop(playerid,enterexit,interiorid);
+forward OnEnterExitModShop(playerid, enterexit, interiorid);
+public OnEnterExitModShop(playerid, enterexit, interiorid) _EnterExitModShop(playerid, enterexit, interiorid);
 
-AddStaticVehicle(modelid, Float:spawn_x, Float:spawn_y, Float:spawn_z, Float:z_angle, color1, color2){
+stock AddStaticVehicle(modelid, Float:spawn_x, Float:spawn_y, Float:spawn_z, Float:z_angle, color1, color2){
 	new vehicleid = SAMP_AddStaticVehicle(modelid, spawn_x, spawn_y, spawn_z, Float:z_angle, color1, color2);
 	VEHICLE_SpawnPos[vehicleid][0] = spawn_x;
 	VEHICLE_SpawnPos[vehicleid][1] = spawn_y;
@@ -76,7 +75,7 @@ AddStaticVehicle(modelid, Float:spawn_x, Float:spawn_y, Float:spawn_z, Float:z_a
 	return vehicleid;
 }
 
-native RepairVehicle(vehicleid);
+native RepairVehicle(vehicleid); // Repairs the damage model and resets the health
 native GetVehicleVelocity(vehicleid, &Float:X, &Float:Y, &Float:Z);
 native SetVehicleVelocity(vehicleid, Float:X, Float:Y, Float:Z);
 
@@ -87,7 +86,7 @@ stock encode_tires(tire1, tire2, tire3, tire4) {	// written by Kye
 	return tire1 | (tire2 << 1) | (tire3 << 2) | (tire4 << 3);
 }
 
-stock SetVehicleTires(vehicleid,tire1,tire2,tire3,tire4){
+stock SetVehicleTires(vehicleid, tire1, tire2, tire3, tire4){
 	new panels, doors, lights, tires;
 	GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
 	tires = encode_tires(tire1,tire2,tire3,tire4);

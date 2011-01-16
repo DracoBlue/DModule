@@ -9,6 +9,8 @@
 new PLAYER_class_for_player[MAX_PLAYERS];
 new PLAYER_current_team[MAX_PLAYERS];
 
+#define CLICK_SOURCE_SCOREBOARD     0
+
 forward OnPlayerClickPlayer(playerid, clickedplayerid, source);
 public OnPlayerClickPlayer(playerid, clickedplayerid, source){
 	if(_ClickPlayer(playerid, clickedplayerid, source)){
@@ -58,13 +60,15 @@ public OnPlayerSpawn(playerid) {
 forward OnPlayerDeath(playerid, killerid, reason);
 public OnPlayerDeath(playerid, killerid, reason) _Death(playerid, killerid, reason);
 
-forward OnPlayerPrivmsg(playerid, recieverid, text[]);
-public OnPlayerPrivmsg(playerid, recieverid, text[]) {
-	if (_Privmsg(playerid, recieverid, text)) {
-		return 0;
-	}
-	return 1;
-}
+// FIXME: still working?
+// forward OnPlayerPrivmsg(playerid, recieverid, text[]);
+// public OnPlayerPrivmsg(playerid, recieverid, text[]) {
+//	if (_Privmsg(playerid, recieverid, text)) {
+//		return 0;
+//	}
+//	return 1;
+//}
+
 forward OnPlayerText(playerid, text[]);
 public OnPlayerText(playerid, text[]) {
 	if (_Text(playerid, text)) {
@@ -83,8 +87,9 @@ public OnPlayerCommandText(playerid, cmdtext[]) {
 
 forward OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
 public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid) _InteriorChange(playerid, newinteriorid, oldinteriorid);
-forward OnPlayerInfoChange(playerid);
-public OnPlayerInfoChange(playerid) _InfoChange(playerid);
+// FIXME: still working?
+// forward OnPlayerInfoChange(playerid);
+// public OnPlayerInfoChange(playerid) _InfoChange(playerid);
 forward OnPlayerStateChange(playerid, newstate, oldstate);
 public OnPlayerStateChange(playerid, newstate, oldstate) _StateChange(playerid, newstate, oldstate);
 
@@ -104,21 +109,29 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if(newkeys & KEY_ANALOG_RIGHT) _Hotkey1Pressed(playerid);
 	if(newkeys & KEY_ANALOG_LEFT) _Hotkey2Pressed(playerid);
 }
-forward OnPlayerTeamPrivmsg(playerid, teamid, text[]);
-public OnPlayerTeamPrivmsg(playerid, teamid, text[]) _TeamPrivmsg(playerid, teamid, text);
+// FIXME: still working?
+// forward OnPlayerTeamPrivmsg(playerid, teamid, text[]);
+// public OnPlayerTeamPrivmsg(playerid, teamid, text[]) _TeamPrivmsg(playerid, teamid, text);
 
 #pragma library players
 
-#define SPECIAL_ACTION_NONE			0
-#define SPECIAL_ACTION_USEJETPACK		2
-#define SPECIAL_ACTION_DANCE1			5
-#define SPECIAL_ACTION_DANCE2			6
-#define SPECIAL_ACTION_DANCE3			7
-#define SPECIAL_ACTION_DANCE4			8
-#define SPECIAL_ACTION_HANDSUP			10
-#define SPECIAL_ACTION_USECELLPHONE		11
-#define SPECIAL_ACTION_SITTING			12
-#define SPECIAL_ACTION_STOPUSECELLPHONE 	13
+#define SPECIAL_ACTION_NONE             0
+#define SPECIAL_ACTION_DUCK             1
+#define SPECIAL_ACTION_USEJETPACK       2
+#define SPECIAL_ACTION_ENTER_VEHICLE    3
+#define SPECIAL_ACTION_EXIT_VEHICLE     4
+#define SPECIAL_ACTION_DANCE1           5
+#define SPECIAL_ACTION_DANCE2           6
+#define SPECIAL_ACTION_DANCE3           7
+#define SPECIAL_ACTION_DANCE4           8
+#define SPECIAL_ACTION_HANDSUP          10
+#define SPECIAL_ACTION_USECELLPHONE     11
+#define SPECIAL_ACTION_SITTING          12
+#define SPECIAL_ACTION_STOPUSECELLPHONE 13
+#define SPECIAL_ACTION_DRINK_BEER       20
+#define SPECIAL_ACTION_SMOKE_CIGGY      21
+#define SPECIAL_ACTION_DRINK_WINE       22
+#define SPECIAL_ACTION_DRINK_SPRUNK     23
 
 native SendClientMessage(playerid, color, const message[]);
 native SendPlayerMessageToPlayer(playerid, senderid, const message[]);
@@ -176,6 +189,8 @@ native SetPlayerFacingAngle(playerid,Float:ang);
 native GetPlayerFacingAngle(playerid,&Float:ang);
 native SetPlayerInterior(playerid,interiorid);
 native GetPlayerInterior(playerid);
+native IsPlayerInRangeOfPoint(playerid, Float:range, Float:x, Float:y, Float:z);
+
 native SAMP_SetPlayerHealth(playerid, Float:health)=SetPlayerHealth;
 stock SetPlayerHealth(playerid,Float:health) {
 	SetVal(PlayerHealth,playerid,floatround(health));
@@ -213,6 +228,7 @@ stock SetPlayerTeam(playerid, teamid) {
 		SAMP_SetPlayerTeam(p,PLAYER_current_team[p]);
 	}
 }
+
 native GetPlayerTeam(playerid);
 
 native SetPlayerScore(playerid,score);
@@ -238,12 +254,13 @@ native GetPlayerWantedLevel(playerid);
 // Player controls
 native TogglePlayerControllable(playerid, toggle);
 native PlayerPlaySound(playerid, soundid, Float:x, Float:y, Float:z);
-native ApplyAnimation(playerid, animlib[], animname[], Float:fS, opt1, opt2, opt3, opt4, opt5);
-native ClearAnimations(playerid);
+native ApplyAnimation(playerid, animlib[], animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0);
+native ClearAnimations(playerid, forcesync = 0);
 native GetPlayerSpecialAction(playerid);
 native SetPlayerSpecialAction(playerid,actionid);
 
 // Player map commands
+native LimitPlayerMarkerRadius(Float:marker_radius);
 native SetPlayerCheckpoint(playerid, Float:x, Float:y, Float:z, Float:size);
 native DisablePlayerCheckpoint(playerid);
 native SetPlayerRaceCheckpoint(playerid, type, Float:x, Float:y, Float:z, Float:nextx, Float:nexty, Float:nextz, Float:size);
@@ -251,19 +268,21 @@ native DisablePlayerRaceCheckpoint(playerid);
 native SetPlayerWorldBounds(playerid,Float:x_max,Float:x_min,Float:y_max,Float:y_min);
 native SetPlayerMarkerForPlayer(playerid, showplayerid, color);
 native ShowPlayerNameTagForPlayer(playerid, showplayerid, show);
-native SetPlayerMapIcon(playerid, iconid, Float:x, Float:y, Float:z, markertype, color);
-native RemovePlayerMapIcon(playerid, iconid);
+
+// Player camera
 native SetPlayerCameraPos(playerid,Float:x, Float:y, Float:z);
 native SetPlayerCameraLookAt(playerid, Float:x, Float:y, Float:z);
 native SetCameraBehindPlayer(playerid);
+native GetPlayerCameraPos(playerid, &Float:x, &Float:y, &Float:z);
+native GetPlayerCameraFrontVector(playerid, &Float:x, &Float:y, &Float:z);
 native AllowPlayerTeleport(playerid, allow);
 
 // Insane Stunts
 native EnableStuntBonusForPlayer(playerid, enable);
 
-// Spectating
 native TogglePlayerSpectating(playerid, toggle);
 native PlayerSpectatePlayer(playerid, targetplayerid, mode = SPECTATE_MODE_NORMAL);
+native PlayerSpectateVehicle(playerid, targetvehicleid, mode = SPECTATE_MODE_NORMAL);
 
 // Alcohol
 native SetPlayerDrunkLevel(playerid,drunkenlevel);
@@ -280,7 +299,7 @@ native GetPlayerDrunkLevel(playerid);
 #define WEAPONSKILL_AK47				8
 #define WEAPONSKILL_M4					9
 #define WEAPONSKILL_SNIPERRIFLE			10
-native SAMP_SetPlayerSkillLevel(playerid, skill, level) = SetPlayerSkillLevel;
+native SetPlayerSkillLevel(playerid, skill, level);
 
 native GetPlayerVelocity(playerid, &Float:x, &Float:y, &Float:z);
 native SetPlayerVelocity(playerid, Float:x, Float:y, Float:z);

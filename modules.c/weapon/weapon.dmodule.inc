@@ -1,7 +1,21 @@
+#define FIGHT_STYLE_NORMAL              4
+#define FIGHT_STYLE_BOXING              5
+#define FIGHT_STYLE_KUNGFU              6
+#define FIGHT_STYLE_KNEEHEAD            7
+#define FIGHT_STYLE_GRABKICK            15
+#define FIGHT_STYLE_ELBOW               16
+
+#define WEAPONSTATE_UNKNOWN             -1
+#define WEAPONSTATE_NO_BULLETS          0
+#define WEAPONSTATE_LAST_BULLET         1
+#define WEAPONSTATE_MORE_BULLETS        2
+#define WEAPONSTATE_RELOADING           3
+
 native SAMP_GivePlayerWeapon(playerid, weaponid, ammo) = GivePlayerWeapon;
 native SAMP_ResetPlayerWeapons(playerid) = ResetPlayerWeapons;
 native GetPlayerWeapon(playerid);
-native SetPlayerDisabledWeapons(playerid, ...);
+// FIXME: Still working?
+// native SetPlayerDisabledWeapons(playerid, ...);
 native SAMP_SetPlayerAmmo(playerid, weaponslot, ammo) = SetPlayerAmmo;
 native GetPlayerAmmo(playerid);
 native SAMP_GetPlayerWeaponData(playerid, slot, &weapons, &ammo) = GetPlayerWeaponData;

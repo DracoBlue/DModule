@@ -24,7 +24,8 @@ version of dmodule, since the api and stuff is usually subject to change.
 # Changelog
 
 - 0.15-dev
-  - added propel database extension
+  - updated existing stuff to 0.3c
+  - removed some gtat defines
 - 0.14 
   - added new project.cfg (lua style config file)
   - added wine support for compiling

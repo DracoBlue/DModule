@@ -1,3 +1,11 @@
+#define MAPICON_LOCAL             0 // displays in the player's local area
+#define MAPICON_GLOBAL            1 // displays always
+#define MAPICON_LOCAL_CHECKPOINT  2 // displays in the player's local area and has a checkpoint marker
+#define MAPICON_GLOBAL_CHECKPOINT 3 // displays always and has a checkpoint marker
+
+native SetPlayerMapIcon(playerid, iconid, Float:x, Float:y, Float:z, markertype, color, style = MAPICON_LOCAL);
+native RemovePlayerMapIcon(playerid, iconid);
+
 #define MAPICONS_GTATMAXIMUM 1000
 #define MAPICONS_MAX_SAMPICONS 32
 new MAPICONS_SampIDInUse[MAX_PLAYERS][MAPICONS_MAX_SAMPICONS];
