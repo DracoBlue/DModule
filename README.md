@@ -30,6 +30,7 @@ version of dmodule, since the api and stuff is usually subject to change.
   - updated djson to 1.6.2
   - fixed startmoney for players in modeconfig
   - added nodriveby module
+  - added forEachConnectedPlayer-macro
 - 0.14 
   - added new project.cfg (lua style config file)
   - added wine support for compiling
