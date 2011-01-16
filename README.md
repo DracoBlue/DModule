@@ -31,6 +31,7 @@ version of dmodule, since the api and stuff is usually subject to change.
   - fixed startmoney for players in modeconfig
   - added nodriveby module
   - added forEachConnectedPlayer-macro
+  - change: StateChange, KeyChange and InteriorChange callbacks cannot be aborted anymore
 - 0.14 
   - added new project.cfg (lua style config file)
   - added wine support for compiling
