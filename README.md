@@ -26,6 +26,7 @@ version of dmodule, since the api and stuff is usually subject to change.
 - 0.15-dev
   - updated existing stuff to 0.3c
   - removed some gtat defines
+  - dcache does now store PlayerPosition only up to highest connection id
 - 0.14 
   - added new project.cfg (lua style config file)
   - added wine support for compiling
