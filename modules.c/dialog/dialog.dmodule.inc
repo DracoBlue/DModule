@@ -12,21 +12,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
 
 /*
 	DIALOG_STYLE_MSGBOX:
-		Response 1 beim ersten Button
-		Response 0 beim zweiten Button
+		Response 1 for first button
+		Response 0 for second button
 		
 	DIALOG_STYLE_INPUT:
-		listitem immer -1
-		inputtext immer das eingegebene
-		Response 1 beim ersten Button
-		Response 0 beim zweiten Button
+		listitem is always -1
+		inputtext is the input text 
+		Response 1 for the first button
+		Response 0 for the second button
 		
 	DIALOG_STYLE_LIST:
-		Response 1 beim ersten Button
-			mit listitem = 0 für die erste Linie
-			mit listitem = 1 für die zweite Linie
-			usw
-		Response 0 beim zweiten Button
-		
+		Response 1 for the first button
+			with listitem = 0 for the first line
+			with listitem = 1 for the second line
+			etc.
+		Response 0 for the second button
 	
 */
