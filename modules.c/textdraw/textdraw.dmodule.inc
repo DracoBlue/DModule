@@ -1,5 +1,5 @@
 // See Copyright Notice in core\LICENSE.txt
-#define MAX_TEXT_DRAWS							(1024)
+#define MAX_TEXT_DRAWS                          (2048)
 #define INVALID_TEXT_DRAW						(0xFFFF)
 
 new Text:TEXTDRAW_item[MAX_TEXT_DRAWS];

@@ -35,3 +35,9 @@ native MovePlayerObject(playerid, objectid, Float:X, Float:Y, Float:Z, Float:Spe
 native StopPlayerObject(playerid, objectid);
 native AttachObjectToPlayer(objectid, playerid, Float:OffsetX, Float:OffsetY, Float:OffsetZ, Float:rX, Float:rY, Float:rZ);
 native AttachPlayerObjectToPlayer(objectplayer, objectid, attachplayer, Float:OffsetX, Float:OffsetY, Float:OffsetZ, Float:rX, Float:rY, Float:rZ);
+
+#define MAX_PLAYER_ATTACHED_OBJECTS 5 // This is the number of attached indexes available ie 5 = 0-4
+
+native SetPlayerAttachedObject(playerid, index, modelid, bone, Float:fOffsetX = 0.0, Float:fOffsetY = 0.0, Float:fOffsetZ = 0.0, Float:fRotX = 0.0, Float:fRotY = 0.0, Float:fRotZ = 0.0, Float:fScaleX = 1.0, Float:fScaleY = 1.0, Float:fScaleZ = 1.0);
+native RemovePlayerAttachedObject(playerid, index);
+native IsPlayerAttachedObjectSlotUsed(playerid, index);

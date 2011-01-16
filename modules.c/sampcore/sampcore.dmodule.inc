@@ -13,15 +13,12 @@ main () {
 
 #define SAMP_MAX_TEAMS 255
 // Util
-#if !defined print
 native print(const string[]);
-#endif
 #if defined DEBUG_EVENTS
 stock debugprint(msg[]) print(msg);
 #endif
-#if !defined printf
 native printf(const format[], {Float,_}:...);
-#endif
+
 native SendClientMessageToAll(color, const message[]);
 native GameTextForAll(const string[],time,style);
 native SetTimer(funcname[], interval, repeating);
@@ -67,6 +64,7 @@ native SetWeather(weatherid);
 native SetGravity(Float:gravity);
 native AllowAdminTeleport(allow);
 native SetDeathDropAmount(amount);
+native DisableNameTagLOS(); // Disables the nametag Line-Of-Sight checking
 native CreateExplosion(Float:X, Float:Y, Float:Z, type, Float:Radius);
 native EnableZoneNames(enable);
 native UsePlayerPedAnims();		// Will cause the players to use CJ running/walking animations

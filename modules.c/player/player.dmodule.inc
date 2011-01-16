@@ -113,6 +113,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 // forward OnPlayerTeamPrivmsg(playerid, teamid, text[]);
 // public OnPlayerTeamPrivmsg(playerid, teamid, text[]) _TeamPrivmsg(playerid, teamid, text);
 
+forward OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+forward OnPlayerUpdate(playerid);
+forward OnPlayerStreamIn(playerid, forplayerid);
+forward OnPlayerStreamOut(playerid, forplayerid);
+
 #pragma library players
 
 #define SPECIAL_ACTION_NONE             0
@@ -139,6 +144,9 @@ native SendPlayerMessageToAll(senderid, const message[]);
 native SendDeathMessage(killer,killee,weapon);
 native GameTextForPlayer(playerid,const string[],time,style);
 
+#define MAX_CHATBUBBLE_LENGTH 144
+native SetPlayerChatBubble(playerid, text[], color, Float:drawdistance, expiretime);
+
 // Admin
 native IsPlayerAdmin(playerid);
 native Kick(playerid);
@@ -149,6 +157,13 @@ native BanEx(playerid, const reason[]);
 native IsPlayerConnected(playerid);
 native IsPlayerInCheckpoint(playerid);
 native IsPlayerInRaceCheckpoint(playerid);
+native IsPlayerStreamedIn(playerid, forplayerid);
+
+native SetPlayerFightingStyle(playerid, style);
+native GetPlayerFightingStyle(playerid);
+native PlayCrimeReportForPlayer(playerid, suspectid, crime);
+native SetPlayerShopName(playerid, shopname[]);
+
 
 new SPAWNINFO_Info[MAX_PLAYERS][8]; // 0 = team, 1 = skin, 2 = w1, 3 = w1_ammo, 4 = w2, 5 = w2_ammo, 6 = w3, 7 = w3_ammo
 new Float:SPAWNINFO_Pos[MAX_PLAYERS][4];
@@ -258,6 +273,12 @@ native ApplyAnimation(playerid, animlib[], animname[], Float:fDelta, loop, lockx
 native ClearAnimations(playerid, forcesync = 0);
 native GetPlayerSpecialAction(playerid);
 native SetPlayerSpecialAction(playerid,actionid);
+native GetPlayerAnimationIndex(playerid); // return the index of any running applied animations (0 if none are running)
+native GetAnimationName(index, animlib[], len1, animname[], len2); // get the animation lib/name for the index
+
+#define PLAYER_MARKERS_MODE_OFF         (0)
+#define PLAYER_MARKERS_MODE_GLOBAL      (1)
+#define PLAYER_MARKERS_MODE_STREAMED    (2)
 
 // Player map commands
 native LimitPlayerMarkerRadius(Float:marker_radius);
@@ -303,3 +324,15 @@ native SetPlayerSkillLevel(playerid, skill, level);
 
 native GetPlayerVelocity(playerid, &Float:x, &Float:y, &Float:z);
 native SetPlayerVelocity(playerid, Float:x, Float:y, Float:z);
+
+// Recording for NPC playback
+#define PLAYER_RECORDING_TYPE_NONE      0
+#define PLAYER_RECORDING_TYPE_DRIVER    1
+#define PLAYER_RECORDING_TYPE_ONFOOT    2
+
+native StartRecordingPlayerData(playerid, recordtype, recordname[]);
+native StopRecordingPlayerData(playerid);
+
+// NPC
+native ConnectNPC(name[], script[]);
+native IsPlayerNPC(playerid);

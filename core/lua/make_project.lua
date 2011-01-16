@@ -430,7 +430,7 @@ if (project.cfg.debug_events==true) then
 	table.insert(file_content,"#define DEBUG_EVENTS 1")
 end
 table.insert(file_content,"#define MAX_STRING 255")
-table.insert(file_content,"#define MAX_PLAYERS 200")
+table.insert(file_content,"#define MAX_PLAYERS 500")
 table.insert(file_content,"new PL_language[MAX_PLAYERS];")
 table.insert(file_content,"#pragma unused PL_language")
 table.insert(file_content,"native format(output[], len, const format[], {Float,_}:...);")

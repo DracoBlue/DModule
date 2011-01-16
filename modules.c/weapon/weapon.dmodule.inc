@@ -20,6 +20,7 @@ native SAMP_SetPlayerAmmo(playerid, weaponslot, ammo) = SetPlayerAmmo;
 native GetPlayerAmmo(playerid);
 native SAMP_GetPlayerWeaponData(playerid, slot, &weapons, &ammo) = GetPlayerWeaponData;
 native SetPlayerArmedWeapon(playerid,weaponid);
+native GetPlayerWeaponState(playerid);
 
 new WEAPON_Weapon[13];
 

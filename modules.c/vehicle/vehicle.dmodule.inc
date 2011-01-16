@@ -9,6 +9,25 @@
 #define INVALID_VEHICLE_ID						(0xFFFF)
 #define MAX_VEHICLES                            (2000)
 
+#define CARMODTYPE_SPOILER      0
+#define CARMODTYPE_HOOD         1
+#define CARMODTYPE_ROOF         2
+#define CARMODTYPE_SIDESKIRT    3
+#define CARMODTYPE_LAMPS        4
+#define CARMODTYPE_NITRO        5
+#define CARMODTYPE_EXHAUST      6
+#define CARMODTYPE_WHEELS       7
+#define CARMODTYPE_STEREO       8
+#define CARMODTYPE_HYDRAULICS   9
+#define CARMODTYPE_FRONT_BUMPER 10
+#define CARMODTYPE_REAR_BUMPER  11
+#define CARMODTYPE_VENT_RIGHT   12
+#define CARMODTYPE_VENT_LEFT    13
+
+#define VEHICLE_PARAMS_UNSET    -1
+#define VEHICLE_PARAMS_OFF      0
+#define VEHICLE_PARAMS_ON       1
+
 new Float:VEHICLE_SpawnPos[MAX_VEHICLES][3];
 
 native SAMP_AddStaticVehicle(modelid, Float:spawn_x, Float:spawn_y, Float:spawn_z, Float:z_angle, color1, color2) = AddStaticVehicle;
@@ -41,14 +60,22 @@ native IsTrailerAttachedToVehicle(vehicleid);
 native GetVehicleTrailer(vehicleid);
 native SetVehicleNumberPlate(vehicleid, numberplate[]);
 native GetVehicleModel(vehicleid);
+native GetPlayerVehicleSeat(playerid);
 
 native PutPlayerInVehicle(playerid, vehicleid, seatid);
 native GetPlayerVehicleID(playerid);
 native RemovePlayerFromVehicle(playerid);
 native IsPlayerInVehicle(playerid, vehicleid);
 native IsPlayerInAnyVehicle(playerid);
+native GetPlayerSurfingVehicleID(playerid);
 
-// Spectating
+native IsVehicleStreamedIn(vehicleid, forplayerid);
+native GetVehicleRotationQuat(vehicleid, &Float:w, &Float:x, &Float:y, &Float:z);
+native ManualVehicleEngineAndLights();
+native SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+native GetVehicleParamsEx(vehicleid, &engine, &lights, &alarm, &doors, &bonnet, &boot, &objective);
+native SetVehicleAngularVelocity(vehicleid, Float:X, Float:Y, Float:Z);
+
 
 forward OnVehicleSpawn(vehicleid);
 public OnVehicleSpawn(vehicleid) _VehicleSpawn(vehicleid);
@@ -66,6 +93,9 @@ forward OnPlayerExitVehicle(playerid, vehicleid);
 public OnPlayerExitVehicle(playerid, vehicleid) _ExitVehicle(playerid, vehicleid);
 forward OnEnterExitModShop(playerid, enterexit, interiorid);
 public OnEnterExitModShop(playerid, enterexit, interiorid) _EnterExitModShop(playerid, enterexit, interiorid);
+forward OnVehicleDamageStatusUpdate(vehicleid, playerid);
+forward OnVehicleStreamIn(vehicleid, forplayerid);
+forward OnVehicleStreamOut(vehicleid, forplayerid);
 
 stock AddStaticVehicle(modelid, Float:spawn_x, Float:spawn_y, Float:spawn_z, Float:z_angle, color1, color2){
 	new vehicleid = SAMP_AddStaticVehicle(modelid, spawn_x, spawn_y, spawn_z, Float:z_angle, color1, color2);

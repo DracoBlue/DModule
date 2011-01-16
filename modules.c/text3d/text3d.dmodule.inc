@@ -1,3 +1,7 @@
+#define MAX_3DTEXT_GLOBAL                       (1024)
+#define MAX_3DTEXT_PLAYER                       (1024)
+#define INVALID_3DTEXT_ID                       (0xFFFF)
+
 // Global 3D Text Labels
 native Text3D:Create3DTextLabel(text[], color, Float:X, Float:Y, Float:Z, Float:DrawDistance, virtualworld, testLOS=0);
 native Delete3DTextLabel(Text3D:id);
