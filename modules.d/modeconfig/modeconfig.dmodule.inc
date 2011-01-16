@@ -28,6 +28,6 @@ modeconfig_GameModeInit() {
 
 #if START_MONEY_FOR_PLAYERS != 0
 modeconfig_Connect(playerid) {
-	GivePlayerMoney(playerid,GetPlayerMoney(playerid)+(START_MONEY_FOR_PLAYERS));
+	GivePlayerMoney(playerid,(START_MONEY_FOR_PLAYERS) - GetPlayerMoney(playerid));
 }
 #endif

@@ -28,6 +28,7 @@ version of dmodule, since the api and stuff is usually subject to change.
   - removed some gtat defines
   - dcache does now store PlayerPosition only up to highest connection id
   - updated djson to 1.6.2
+  - fixed startmoney for players in modeconfig
 - 0.14 
   - added new project.cfg (lua style config file)
   - added wine support for compiling
